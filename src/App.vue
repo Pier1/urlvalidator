@@ -44,6 +44,9 @@ body {
     &.--label {
       flex: 0 0 20%;
     }
+    &.--grow {
+      flex-grow: 1;
+    }
   }
 }
 

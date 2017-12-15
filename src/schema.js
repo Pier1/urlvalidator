@@ -8,6 +8,7 @@
  */
 
 const obj = {
+  href: '',
   https: true,
   host: 'www.pier1.com',
   path: '/rugs',
