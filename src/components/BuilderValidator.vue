@@ -1,7 +1,7 @@
 <template>
   <div class="m-builderValidator" id="builderValidator">
-    <ValidateField :url="url" @update="splitUrlToObj" />
-    <Form />
+    <ValidateField :test="url" @update="splitUrlToObj" />
+    <Form :url="url" />
   </div>
 </template>
 
