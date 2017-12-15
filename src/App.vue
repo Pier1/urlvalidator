@@ -33,6 +33,20 @@ body {
   background-color: #f2f1f1;
 }
 
+.o-flexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  .m-flexRowItem {
+    padding: 0.5rem;
+    flex: 0 0 25%;
+    &.--label {
+      flex: 0 0 20%;
+    }
+  }
+}
+
 .clearfix:before,
 .clearfix:after {
   content: '';
