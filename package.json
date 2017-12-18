@@ -1,8 +1,11 @@
 {
   "name": "urlvalidator",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "URL Validation Service",
   "author": "Davis, Steven T <STDAVIS@pier1.com>",
+  "contributors": [
+    "Chancellor Clark <cclark@pier1.com>"
+  ],
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -11,6 +14,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "normalize-scss": "^7.0.0",
     "vue": "^2.5.2"
   },
   "devDependencies": {
@@ -60,7 +64,8 @@
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "zip-folder": "^1.0.0"
   },
   "engines": {
     "node": ">= 4.0.0",
