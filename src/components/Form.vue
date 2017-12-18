@@ -1,19 +1,19 @@
 <template>
   <div class="m-form" id="form">
     <div class="form-group">
-      <input type="checkbox" id="form-https" v-model="urlData.https"/>
+      <input type="checkbox" id="form-https" v-model="urlData.https" @click="sendObj"/>
       <label for="form-https" >
         Protocol:
       </label>
     </div>
     <div class="form-group">
-      <input type="text" id="form-host" v-model="urlData.host"/>
+      <input type="text" id="form-host" v-model="urlData.host" @input="sendObj" />
       <label for="form-host">
         Base URL (Hostname)
       </label>
     </div>
     <div class="form-group">
-      <input type="text" id="form-path" v-model="urlData.path"/>
+      <input type="text" id="form-path" v-model="urlData.path" @input="sendObj" />
       <label for="form-path">
         URL Path
       </label>
@@ -23,9 +23,9 @@
         <legend>Query Params</legend>
         <span class="add-param" v-on:click="addParam('params')">+</span>
         <div class="params-row" v-for="param in urlData.params">
-          <input type="text" v-model="param.key">
+          <input type="text" v-model="param.key" @input="sendObj">
           <span>=</span>
-          <input type="text" v-model="param.value">
+          <input type="text" v-model="param.value" @input="sendObj">
         </div>
       </fieldset>
     </div>
@@ -34,9 +34,9 @@
         <legend>Hash Params</legend>
         <span class="add-param" v-on:click="addParam('hash')">+</span>
         <div class="hash-row" v-for="param in urlData.hash">
-          <input type="text" v-model="param.key">
+          <input type="text" v-model="param.key" @input="sendObj">
           <span>=</span>
-          <input type="text" v-model="param.value">
+          <input type="text" v-model="param.value" @input="sendObj">
         </div>
       </fieldset>
     </div>
@@ -58,6 +58,9 @@ export default {
         key: '',
         value: ''
       });
+    },
+    sendObj() {
+      this.$emit('update', this.urlData);
     }
   }
 };

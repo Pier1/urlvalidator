@@ -3,7 +3,7 @@
     <div class="m-validateField o-flexRow" id="validateField">
       <label v-if="true" for="validateField" class="o-validateField--label m-flexRowItem --label">Enter URL to validate, otherwise fill fields below to build URL.</label>
       <div class="m-flexRowItem">
-        <input name="validateField" class="o-validateField--input" value="https://www.pier1.com/rugs?device=mobile&amp;log=true&amp;campaign=170712-July#nav=left&amp;email=true" v-model="url.href" @input="updateModel" v-on:keyup.enter="validateUrl" />
+        <input name="validateField" class="o-validateField--input" placeholder="https://www.exampe.com/example" v-model="url.href" @input="updateModel" v-on:keyup.enter="validateUrl" />
 
       </div>
       <div class="m-flexRowItem">
@@ -39,9 +39,7 @@ export default {
         validChars: true,
         protocol: true,
         host: true,
-        path: true,
-        params: true,
-        hash: true
+        path: true
       }
     };
   },

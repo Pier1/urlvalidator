@@ -1,6 +1,6 @@
 <template>
   <div class="m-builderValidator" id="builderValidator">
-    <ValidateField :test="url" @update="splitUrlToObj" />
+    <ValidateField :url="url" @update="splitUrlToObj" />
     <Form :url="url" />
   </div>
 </template>
@@ -9,7 +9,7 @@
 import ValidateField from './ValidateField';
 import Form from './Form';
 import regex from '../regex';
-import { splitParams } from '../helpers';
+import { splitParams, combineParams } from '../helpers';
 
 export default {
   name: 'BuilderValidator',
@@ -40,6 +40,14 @@ export default {
       this.url.path = anchor.pathname;
       this.url.params = splitParams('?', anchor.search);
       this.url.hash = splitParams('#', anchor.hash);
+    },
+    consumeUrlObj(obj) {
+      this.url.href =
+        (obj.https ? 'https://' : 'http://') +
+        obj.host +
+        obj.path +
+        combineParams('?', obj.params) +
+        combineParams('#', obj.hash);
     }
   }
 };
