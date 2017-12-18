@@ -1,4 +1,4 @@
-import regex from "./regex";
+import regex from './regex';
 
 export function splitParams(deliminator, str) {
   try {
@@ -24,7 +24,11 @@ export function combineParams(deliminator, arr) {
     let combinedParams = '';
     if (arr.length) {
       for (let index = 0; index < arr.length; index += 1) {
-        combinedParams += `${(index === 0 ? deliminator : '&') + arr[index].key}=${arr[index].value}`;
+        const key = arr[index].key;
+        const value = arr[index].value;
+        if (key.length) {
+          combinedParams += `${(index === 0 ? deliminator : '&') + key}=${value}`;
+        }
       }
     }
     return combinedParams;
