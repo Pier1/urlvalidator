@@ -1,7 +1,9 @@
 <template>
   <div class="m-builderValidator" id="builderValidator">
     <ValidateField :url="url" @update="splitUrlToObj" />
-    <Form :url="url" @update="consumeUrlObj"/>
+    <transition name="reveal">
+      <Form :url="url" @update="consumeUrlObj" v-if="withForm" />
+    </transition>
   </div>
 </template>
 
@@ -19,6 +21,7 @@ export default {
   },
   data() {
     return {
+      withForm: false,
       url: {
         href: '',
         https: true,
@@ -31,15 +34,19 @@ export default {
   },
   methods: {
     splitUrlToObj(str) {
-      const anchor = document.createElement('a');
-      anchor.href = decodeURIComponent(str);
+      if (str === 'showForm') {
+        this.withForm = true;
+      } else {
+        const anchor = document.createElement('a');
+        anchor.href = decodeURIComponent(str);
 
-      this.url.href = str;
-      this.url.https = !!anchor.protocol.match(regex.https);
-      this.url.host = anchor.hostname;
-      this.url.path = anchor.pathname;
-      this.url.params = splitParams('?', anchor.search);
-      this.url.hash = splitParams('#', anchor.hash);
+        this.url.href = str;
+        this.url.https = !!anchor.protocol.match(regex.https);
+        this.url.host = anchor.hostname;
+        this.url.path = anchor.pathname;
+        this.url.params = splitParams('?', anchor.search);
+        this.url.hash = splitParams('#', anchor.hash);
+      }
     },
     consumeUrlObj(obj) {
       this.url.href =
@@ -48,12 +55,24 @@ export default {
         obj.path +
         combineParams('?', obj.params) +
         combineParams('#', obj.hash);
+    },
+    showForm() {
+      this.withForm = true;
     }
   }
 };
 </script>
 
 <style lang="scss">
+.reveal-enter-active,
+.reveal-leave-active {
+  transition: opacity 0.5s;
+}
+.reveal-enter,
+.reveal-leave-to {
+  opacity: 0;
+}
+
 .m-builderValidator {
   max-width: $max-container-width;
   background-color: white;
