@@ -19,6 +19,20 @@ export function splitParams(deliminator, str) {
   }
 }
 
+export function combineParams(deliminator, arr) {
+  try {
+    let combinedParams = '';
+    if (arr.length) {
+      for (let index = 0; index < arr.length; index += 1) {
+        combinedParams += `${(index === 0 ? deliminator : '&') + arr[index].key}=${arr[index].value}`;
+      }
+    }
+    return combinedParams;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export function validateCharacters(val) {
   return !val.match(regex.unsafeChars);
 }
