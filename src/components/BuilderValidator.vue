@@ -1,7 +1,7 @@
 <template>
   <div class="m-builderValidator" id="builderValidator">
     <ValidateField :url="url" @update="splitUrlToObj" />
-    <Form :url="url" />
+    <Form :url="url" @update="consumeUrlObj"/>
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
     return {
       url: {
         href: '',
-        https: null,
+        https: true,
         host: '',
         path: '',
         params: [],
