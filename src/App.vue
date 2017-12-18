@@ -61,4 +61,16 @@ body {
 .clearfix {
   zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
+
+.button-default {
+  border-radius: 4px 0 0 4px;
+  background: #fefdfd;
+  color: #1592da;
+  font-size: 0.9rem;
+  min-width: 8rem;
+  text-transform: capitalize;
+  font-weight: 600;
+  padding: 0.49327rem 1.125rem;
+  vertical-align: middle;
+}
 </style>

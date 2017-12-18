@@ -1,18 +1,15 @@
 <template>
   <div>
-    <div class="m-validateField o-flexRow" id="validateField">
-      <label v-if="true" for="validateField" class="o-validateField--label m-flexRowItem --label">Enter URL to validate, otherwise fill fields below to build URL.</label>
-      <div class="m-flexRowItem">
-        <input name="validateField" class="o-validateField--input" placeholder="https://www.exampe.com/example" v-model="url.href" @input="updateModel" v-on:keyup.enter="validateUrl" />
-
-      </div>
-      <div class="m-flexRowItem">
-        <button class="o-validateField--button" @click="validateUrl">Validate</button>
-      </div>
+    <div id="validation">
+      <input name="validateField" class="validation-input" placeholder="https://www.example.com/example" v-model="url.href" @input="updateModel" v-on:keyup.enter="validateUrl" />
     </div>
-    <div class="m-validInfo o-flexRow">
-      <div class="m-flexRowItem --label"></div>
-      <ul class="m-flexRowItem --grow o-validFlags" v-if="showFlags">
+    <div class="action-buttons">
+      <button class="button-default validate-button" @click="validateUrl">Validate</button>
+      <span class="separator">or</span>
+      <button class="button-default" @click="showForm()">Create new Url</button>
+    </div>
+    <div class="flag-container">
+      <ul v-if="showFlags">
         <li v-for="(text, key) in validFlagText" v-if="text && !validFlags[key]" v-html="text"></li>
       </ul>
     </div>
@@ -21,12 +18,7 @@
 
 <script>
 import configuration from '../configuration';
-import {
-  validateCharacters,
-  validateProtocol,
-  validateHost,
-  validatePath
-} from '../helpers';
+import { validateCharacters, validateProtocol, validateHost, validatePath } from '../helpers';
 
 export default {
   name: 'ValidateField',
@@ -35,6 +27,7 @@ export default {
     return {
       validFlagText: configuration.validationText,
       showFlags: false,
+      previewUrl: false,
       validFlags: {
         validChars: true,
         protocol: true,
@@ -59,26 +52,67 @@ export default {
             this.showFlags = true;
           }
         });
+        if (!this.showFlags) {
+          // show validation success message
+          this.showForm();
+        }
       } else {
         this.showFlags = true;
       }
+    },
+    showForm() {
+      this.showFlags = false;
+      this.$emit('update', 'showForm');
     }
   }
 };
 </script>
 
 <style lang="scss">
-.m-validateField {
-  .o-validateField--input {
-    display: block;
-    width: 100%;
-  }
+#validation {
+  text-align: center;
+  font-size: 1.2rem;
 }
-.m-validInfo {
-  .o-validFlags {
-    margin: 1rem;
-    padding-left: 1.5rem;
-    background-color: rgba(255, 234, 32, 0.4);
-  }
+.validation-input {
+  width: 100%;
+  text-align: center;
+  font: inherit;
+  min-height: 3rem;
+}
+.action-buttons {
+  text-align: center;
+  margin: 1.25rem 0;
+}
+
+.action-buttons .validate-button {
+  font-size: 1.35rem;
+  background: #1592da;
+  color: #fefdfd;
+  min-width: 10rem;
+}
+
+.action-buttons .separator {
+  margin: 0 1rem;
+  font-weight: 600;
+}
+
+.flag-container {
+  margin: 0.5rem 0 0;
+}
+
+.flag-container ul {
+  list-style: none;
+  margin: 0;
+}
+
+.flag-container ul li {
+  padding: 0.5rem;
+  border: 1px solid;
+  border-radius: 2px;
+  border-color: #ec707e;
+  color: #aa1627;
+  width: 90%;
+  margin: 0.25rem auto;
+  text-align: center;
 }
 </style>

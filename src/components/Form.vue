@@ -1,19 +1,19 @@
 <template>
   <div class="m-form" id="form">
     <div class="form-group form-toggle">
-      <input type="radio" id="form-https" name="https_switch" @click="toggleHttps(true)" :checked="urlData.https"/>
+      <input type="radio" id="form-https" name="https_switch" @click="toggleHttps(true)" :checked="url.https"/>
       <label for="form-https">HTTPS</label>
-      <input type="radio" id="form-http" name="https_switch" @click="toggleHttps(false)" :checked="!urlData.https"/>
+      <input type="radio" id="form-http" name="https_switch" @click="toggleHttps(false)" :checked="!url.https"/>
       <label for="form-http">HTTP</label>
     </div>
     <div class="form-group">
-      <input type="text" id="form-host" v-model="urlData.host" @input="sendObj"/>
+      <input type="text" id="form-host" v-model="url.host" @input="sendObj"/>
       <label for="form-host" class=" form-title">
         Base URL
       </label>
     </div>
     <div class="form-group">
-      <input type="text" id="form-path" v-model="urlData.path" @input="sendObj"/>
+      <input type="text" id="form-path" v-model="url.path" @input="sendObj"/>
       <label for="form-path" class="form-title">
         URL Path
       </label>
@@ -21,7 +21,7 @@
     <div class="form-group">
       <fieldset>
         <legend class="form-title">Query Params</legend>
-        <div class="params-row fieldset-row" v-for="(param, index) in urlData.params">
+        <div class="params-row fieldset-row" v-for="(param, index) in url.params">
           <input type="text" v-model="param.key" @input="sendObj">
           <span>=</span>
           <input type="text" v-model="param.value" @input="sendObj">
@@ -33,7 +33,7 @@
     <div class="form-group">
       <fieldset>
         <legend class="form-title">Hash Params</legend>
-        <div class="hash-row fieldset-row" v-for="(param, index) in urlData.hash">
+        <div class="hash-row fieldset-row" v-for="(param, index) in url.hash">
           <input type="text" v-model="param.key" @input="sendObj">
           <span>=</span>
           <input type="text" v-model="param.value" @input="sendObj">
@@ -49,20 +49,14 @@
 export default {
   name: 'Form',
   props: ['url'],
-  data() {
-    return {
-      urlData: Object.assign({}, this.url)
-    };
-  },
   methods: {
     addParam(prop, e) {
-      const property = this.urlData[prop];
+      const property = this.url[prop];
       if (
         !property.length ||
-        (property[property.length - 1].key.length &&
-          property[property.length - 1].value.length)
+        (property[property.length - 1].key.length && property[property.length - 1].value.length)
       ) {
-        this.urlData[prop].push({
+        this.url[prop].push({
           key: '',
           value: ''
         });
@@ -73,22 +67,26 @@ export default {
       }
     },
     deleteParam(prop, idx, e) {
-      this.urlData[prop].splice(idx, 1);
+      this.url[prop].splice(idx, 1);
       this.sendObj();
       e.target.parentElement.parentElement.lastChild.focus();
     },
     toggleHttps(toggle) {
-      this.urlData.https = toggle;
+      this.url.https = toggle;
       this.sendObj();
     },
     sendObj() {
-      this.$emit('update', this.urlData);
+      this.$emit('update', this.url);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+#form {
+  width: 50%;
+  margin: 3rem auto;
+}
 .form-group {
   display: flex;
   flex-direction: column;
