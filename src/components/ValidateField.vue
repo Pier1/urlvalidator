@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div id="validation"  v-bind:class="{ withform: withForm }" @click="transferFocus">
-      <input name="validateField" id="validation-input" placeholder="https://www.example.com/example" v-model="url.href" @input="updateModel" @keyup.enter="validateUrl" :tabindex="withForm ? -1 : 0"/>
+    <div id="validation"  v-bind:class="{ withform: withForm }">
+      <input name="validateField" id="validation-input" placeholder="https://www.example.com/example" v-model="url.href" @input="updateModel" @keyup.enter="validateUrl" :tabindex="withForm ? -1 : 0" @click="transferFocus" @focus="transferFocus" @blur="transferFocus"/>
       <div class="validation-actions" v-if="withForm">
         <div class="validated action" @click="copyUrl" @keyup.enter="copyUrl" v-if="validated && formValid" tabindex="0">
           <img src="../assets/check.png" class="action-img" alt="checkmark">
