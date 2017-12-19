@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div id="validation"  v-bind:class="{ noedit: withForm }">
-      <input name="validateField" id="validation-input" placeholder="https://www.example.com/example" v-model="url.href" @input="updateModel" v-on:keyup.enter="validateUrl" :tabindex="withForm ? -1 : 0"/>
+    <div id="validation"  v-bind:class="{ withform: withForm }" @click="transferFocus">
+      <input name="validateField" id="validation-input" placeholder="https://www.example.com/example" v-model="url.href" @input="updateModel" @keyup.enter="validateUrl" :tabindex="withForm ? -1 : 0"/>
       <div class="validation-actions" v-if="withForm">
         <div class="validated action" @click="copyUrl" @keyup.enter="copyUrl" v-if="validated && formValid" tabindex="0">
           <img src="../assets/check.png" class="action-img" alt="checkmark">
@@ -77,10 +77,15 @@ export default {
         this.showFlags = true;
       }
     },
-    transferFocus() {
-      const actionButton = document.querySelector('.validation-actions div');
-      console.log(actionButton);
-      actionButton.focus();
+    transferFocus(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      if (this.withForm) {
+        const actionButton = document.querySelector('.validation-actions div');
+        actionButton.focus();
+      }
     },
     copyUrl() {
       const target = document.getElementById('validation-input');
@@ -102,34 +107,34 @@ export default {
 
 <style lang="scss">
 #validation {
-  text-align: center;
   font-size: 1.2rem;
   position: relative;
+  text-align: center;
 }
 
-.noedit {
+#validation.withform {
+  text-align: left;
   user-select: none;
 }
 
-.noedit input {
-  pointer-events: none;
+.withform input {
   border-color: transparent;
   background-color: #cbc8c8;
 }
 
 #validation-input {
-  width: 100%;
+  width: 85%;
   text-align: center;
   font: inherit;
   min-height: 3rem;
   margin: 0;
-  padding: 0;
+  padding: 0 0.5rem;
 }
 
 .validation-actions {
   position: absolute;
   top: 0;
-  right: -6px;
+  right: 0;
   bottom: 0;
   background: #fefdfd;
   width: 15%;
