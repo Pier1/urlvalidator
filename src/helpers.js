@@ -22,12 +22,12 @@ export function splitParams(deliminator, str) {
 export function combineParams(deliminator, arr) {
   try {
     let combinedParams = '';
-    if (arr.length) {
+    if (arr && arr.length) {
       for (let index = 0; index < arr.length; index += 1) {
         const key = arr[index].key;
         const value = arr[index].value;
         if (key.length) {
-          combinedParams += `${(index === 0 ? deliminator : '&') + key}=${value}`;
+          combinedParams += `${(index === 0 ? deliminator : '&') + key}${value.length ? `=${  value}` : ''}`;
         }
       }
     }

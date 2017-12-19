@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <Header />
     <BuilderValidator />
   </div>
 </template>
@@ -19,6 +18,9 @@ export default {
 </script>
 
 <style lang="scss">
+* {
+  box-sizing: border-box;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   font-size: 16px;
