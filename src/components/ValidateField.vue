@@ -142,6 +142,7 @@ export default {
   font-size: 1.2rem;
   position: relative;
   text-align: center;
+  display: flex;
 }
 
 #validation.withform {
@@ -150,7 +151,7 @@ export default {
 }
 
 #validation-input {
-  width: 100%;
+  flex: 0 0 100%;
   text-align: center;
   font: inherit;
   min-height: 3rem;
@@ -159,18 +160,16 @@ export default {
 }
 
 .withform #validation-input {
-  width: 85%;
+  flex: 0 1 85%;
+  min-width: 0;
   border-color: transparent;
   background-color: #cbc8c8;
 }
 
 .validation-actions {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
   background: #fefdfd;
-  width: 15%;
+  flex: 1 0 125px;
   display: flex;
 }
 
@@ -217,13 +216,15 @@ export default {
 .action-buttons {
   text-align: center;
   margin: 1.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .action-buttons .validate-button {
   font-size: 1.35rem;
   background: #1592da;
   color: #fefdfd;
-  min-width: 10rem;
 }
 
 .action-buttons .separator {
