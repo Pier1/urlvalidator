@@ -23,7 +23,7 @@
         <legend class="form-title">Query Params</legend>
         <div class="params-row fieldset-row" v-for="(param, index) in url.params">
           <input type="text" v-model="param.key" @input="sendObj">
-          <span>=</span>
+          <span class="param-separator">=</span>
           <input type="text" v-model="param.value" @input="sendObj">
           <span class="delete-param" @click="deleteParam('params', index, $event)" @keyup.enter="deleteParam('params', index, $event)" tabindex="0">X</span>
         </div>
@@ -82,7 +82,8 @@ export default {
 
 <style lang="scss" scoped>
 #form {
-  width: 50%;
+  min-width: 50%;
+  max-width: 495px;
   margin: 1.5rem auto;
 }
 .form-group {
@@ -105,6 +106,8 @@ export default {
 .form-group fieldset {
   border: none;
   padding: 0;
+  min-width: 0;
+  max-width: 400px;
 }
 
 .form-group fieldset span.add-param {
@@ -121,6 +124,17 @@ export default {
 .form-group fieldset .fieldset-row {
   clear: both;
   margin: 0.45rem 0 0;
+  display: flex;
+  align-items: center;
+}
+
+.fieldset-row input {
+  flex: 0 0 45%;
+  min-width: 0;
+}
+
+.fieldset-row .param-separator {
+  padding: 0 0.5rem;
 }
 
 .form-group fieldset .fieldset-row .delete-param {
