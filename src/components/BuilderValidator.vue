@@ -1,6 +1,6 @@
 <template>
   <div class="m-builderValidator" id="builderValidator">
-    <ValidateField :url="url" @update="splitUrlToObj" />
+    <ValidateField :url="url" :withForm="withForm" :formValid="formValid" @update="splitUrlToObj" />
     <transition name="reveal">
       <Form :url="url" @update="consumeUrlObj" v-if="withForm" />
     </transition>
@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       withForm: false,
+      formValid: true,
       url: {
         href: '',
         https: true,
@@ -35,6 +36,7 @@ export default {
   methods: {
     splitUrlToObj(str) {
       if (str === 'showForm') {
+        this.formValid = true;
         this.withForm = true;
       } else {
         const anchor = document.createElement('a');
@@ -49,6 +51,7 @@ export default {
       }
     },
     consumeUrlObj(obj) {
+      this.formValid = false;
       this.url.href =
         (obj.https ? 'https://' : 'http://') +
         obj.host +
@@ -77,7 +80,7 @@ export default {
   max-width: $max-container-width;
   background-color: white;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 0 2px rgba(0, 0, 0, 0.25);
-  margin: 1rem auto;
+  margin: 2rem auto;
   padding: 1rem;
 }
 </style>
