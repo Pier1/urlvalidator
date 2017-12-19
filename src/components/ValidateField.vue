@@ -167,7 +167,7 @@ export default {
 
 .validation-actions .action .action-img {
   flex: 0 0;
-  max-width: 18%;
+  max-width: 25%;
   padding: 0 0 0 0.75rem;
 }
 
