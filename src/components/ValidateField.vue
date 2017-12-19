@@ -1,9 +1,19 @@
 <template>
   <div>
-    <div id="validation">
-      <input name="validateField" class="validation-input" placeholder="https://www.example.com/example" v-model="url.href" @input="updateModel" v-on:keyup.enter="validateUrl" />
+    <div id="validation"  v-bind:class="{ noedit: withForm }">
+      <input name="validateField" id="validation-input" placeholder="https://www.example.com/example" v-model="url.href" @input="updateModel" v-on:keyup.enter="validateUrl"/>
+      <div class="validation-actions" v-if="withForm">
+        <div class="validated action" @click="copyUrl" @keyup.enter="copyUrl" v-if="validated && formValid" tabindex="0">
+          <img src="../assets/check.png" class="action-img" alt="checkmark">
+          <span class="action-txt">Copy</span>
+        </div>
+        <div class="needs-validation action" @click="validateUrl" @keyup.enter="validateUrl" tabindex="0" v-else>
+          <img src="../assets/warning.png" class="action-img" alt="checkmark">
+          <span class="action-txt">Validate</span>
+        </div>
+      </div>
     </div>
-    <div class="action-buttons">
+    <div class="action-buttons" v-if="!withForm">
       <button class="button-default validate-button" @click="validateUrl">Validate</button>
       <span class="separator">or</span>
       <button class="button-default" @click="showForm()">Create new Url</button>
@@ -22,11 +32,12 @@ import { validateCharacters, validateProtocol, validateHost, validatePath } from
 
 export default {
   name: 'ValidateField',
-  props: ['url'],
+  props: ['url', 'withForm', 'formValid'],
   data() {
     return {
       validFlagText: configuration.validationText,
       showFlags: false,
+      validated: false,
       previewUrl: false,
       validFlags: {
         validChars: true,
@@ -38,10 +49,12 @@ export default {
   },
   methods: {
     updateModel($event) {
+      this.validated = false;
       this.$emit('update', $event.target.value);
     },
     validateUrl() {
       this.showFlags = false;
+      this.validated = false;
       this.validFlags.validChars = validateCharacters(this.url.host);
       if (this.validFlags.validChars) {
         this.validFlags.protocol = validateProtocol(this.url.href);
@@ -54,11 +67,24 @@ export default {
         });
         if (!this.showFlags) {
           // show validation success message
+          this.validated = true;
           this.showForm();
         }
       } else {
         this.showFlags = true;
       }
+    },
+    copyUrl() {
+      const target = document.getElementById('validation-input');
+      target.focus();
+      target.setSelectionRange(0, target.value.length);
+      // copy the selection
+      document.execCommand('copy');
+      // restore focus
+      const actionTextContainer = document.querySelector('.validated.action .action-txt');
+      actionTextContainer.firstChild.nodeValue = 'Copied!';
+      const elem = actionTextContainer.parentElement;
+      elem.focus();
     },
     showForm() {
       this.showFlags = false;
@@ -72,13 +98,78 @@ export default {
 #validation {
   text-align: center;
   font-size: 1.2rem;
+  position: relative;
 }
-.validation-input {
+
+.noedit {
+  user-select: none;
+}
+
+.noedit input {
+  pointer-events: none;
+  border-color: transparent;
+  background-color: #cbc8c8;
+}
+
+#validation-input {
   width: 100%;
   text-align: center;
   font: inherit;
   min-height: 3rem;
+  margin: 0;
+  padding: 0;
 }
+
+.validation-actions {
+  position: absolute;
+  top: 0;
+  right: -6px;
+  bottom: 0;
+  background: #fefdfd;
+  width: 15%;
+  display: flex;
+}
+
+.validation-actions .action {
+  box-sizing: border-box;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.validation-actions .action.validated {
+  border: 2px solid #00b574;
+  color: #00b574;
+}
+.validation-actions .action.needs-validation {
+  border: 2px solid #d51d31;
+  color: #d51d31;
+}
+
+.validation-actions .action .action-img {
+  flex: 0 0;
+  max-width: 18%;
+  padding: 0 0 0 0.75rem;
+}
+
+.validation-actions .action .action-txt {
+  padding: 0 0.75rem;
+  line-height: 1;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.75em;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+
 .action-buttons {
   text-align: center;
   margin: 1.25rem 0;

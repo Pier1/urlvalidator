@@ -1,10 +1,10 @@
 <template>
   <div class="m-form" id="form">
     <div class="form-group form-toggle">
-      <input type="radio" id="form-https" name="https_switch" @click="toggleHttps(true)" :checked="url.https"/>
-      <label for="form-https">HTTPS</label>
-      <input type="radio" id="form-http" name="https_switch" @click="toggleHttps(false)" :checked="!url.https"/>
-      <label for="form-http">HTTP</label>
+      <input type="radio" id="form-https" name="https_switch" @click="toggleHttps(true)" :checked="url.https" tabindex="-1"/>
+      <label for="form-https" @keyup.enter="toggleHttps(true)" tabindex="0">HTTPS</label>
+      <input type="radio" id="form-http" name="https_switch" @click="toggleHttps(false)" :checked="!url.https" tabindex="-1"/>
+      <label for="form-http" tabindex="0" @keyup.enter="toggleHttps(false)">HTTP</label>
     </div>
     <div class="form-group">
       <input type="text" id="form-host" v-model="url.host" @input="sendObj"/>
@@ -83,7 +83,7 @@ export default {
 <style lang="scss" scoped>
 #form {
   width: 50%;
-  margin: 3rem auto;
+  margin: 1.5rem auto;
 }
 .form-group {
   display: flex;
