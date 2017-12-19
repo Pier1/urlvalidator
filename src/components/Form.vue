@@ -51,12 +51,10 @@ export default {
   props: ['url'],
   methods: {
     addParam(prop, e) {
+      this.url[prop] = this.url[prop] || [];
       const property = this.url[prop];
-      if (
-        !property.length ||
-        (property[property.length - 1].key.length && property[property.length - 1].value.length)
-      ) {
-        this.url[prop].push({
+      if (!property.length || property[property.length - 1].key.length) {
+        property.push({
           key: '',
           value: ''
         });
