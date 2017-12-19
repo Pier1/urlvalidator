@@ -157,7 +157,7 @@ export default {
 
 .form-toggle label {
   display: inline-block;
-  width: 60px;
+  width: 80px;
   background-color: #e5e3e4;
   color: rgba(0, 0, 0, 0.4);
   font-size: 14px;
