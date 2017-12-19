@@ -12,11 +12,15 @@
       <ul v-if="showFlags">
         <li v-for="(text, key) in validFlagText" v-if="text && !validFlags[key]" v-html="text"></li>
       </ul>
+      <ul v-if="errorStatusCode">
+        <li v-html="errorStatusCode"></li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
+import request from 'request-promise';
 import configuration from '../configuration';
 import { validateCharacters, validateProtocol, validateHost, validatePath } from '../helpers';
 
@@ -27,6 +31,7 @@ export default {
     return {
       validFlagText: configuration.validationText,
       showFlags: false,
+      errorStatusCode: '',
       previewUrl: false,
       validFlags: {
         validChars: true,
@@ -40,7 +45,7 @@ export default {
     updateModel($event) {
       this.$emit('update', $event.target.value);
     },
-    validateUrl() {
+    validateUrlComponents() {
       this.showFlags = false;
       this.validFlags.validChars = validateCharacters(this.url.host);
       if (this.validFlags.validChars) {
@@ -53,11 +58,37 @@ export default {
           }
         });
         if (!this.showFlags) {
-          // show validation success message
-          this.showForm();
+          this.showForm(); // show validation success message
+          return true;
         }
-      } else {
-        this.showFlags = true;
+        return false;
+      }
+      this.showFlags = true;
+      return false;
+    },
+    validateUrl() {
+      const requestOptions = {
+        // TODO: Don't hard code localhost:3000
+        uri: `http://localhost:3000/check-url`,
+        qs: {
+          url: this.url.href
+        },
+        json: true
+      };
+      if (this.validateUrlComponents()) {
+        request(requestOptions)
+          .promise()
+          .bind(this)
+          .then(function responseReturned(res) {
+            if (res.status >= 200 && res.status <= 300) {
+              this.errorStatusCode = '';
+            } else {
+              this.errorStatusCode = `${res.status} - ${res.statusText}`;
+            }
+          })
+          .catch(function errorReturned(error) {
+            this.errorStatusCode = `${error.error.status} - ${error.error.statusText}`;
+          });
       }
     },
     showForm() {
