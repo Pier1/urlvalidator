@@ -184,13 +184,15 @@ export default {
 .action-buttons {
   text-align: center;
   margin: 1.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .action-buttons .validate-button {
   font-size: 1.35rem;
   background: #1592da;
   color: #fefdfd;
-  min-width: 10rem;
 }
 
 .action-buttons .separator {

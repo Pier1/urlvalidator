@@ -35,7 +35,7 @@
         <legend class="form-title">Hash Params</legend>
         <div class="hash-row fieldset-row" v-for="(param, index) in url.hash">
           <input type="text" v-model="param.key" @input="sendObj">
-          <span>=</span>
+          <span class="param-separator">=</span>
           <input type="text" v-model="param.value" @input="sendObj">
           <span class="delete-param" @click="deleteParam('hash', index, $event)" @keyup.enter="deleteParam('hash', index, $event)" tabindex="0">X</span>
         </div>
@@ -129,7 +129,7 @@ export default {
 }
 
 .fieldset-row input {
-  flex: 0 0 45%;
+  flex: 0 0 40%;
   min-width: 0;
 }
 

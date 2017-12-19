@@ -69,7 +69,7 @@ body {
   background: #fefdfd;
   color: #1592da;
   font-size: 0.9rem;
-  min-width: 8rem;
+  flex: 0 1 9rem;
   text-transform: capitalize;
   font-weight: 600;
   padding: 0.49327rem 1.125rem;
