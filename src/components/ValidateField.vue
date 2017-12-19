@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="validation"  v-bind:class="{ noedit: withForm }">
-      <input name="validateField" id="validation-input" placeholder="https://www.example.com/example" v-model="url.href" @input="updateModel" v-on:keyup.enter="validateUrl"/>
+      <input name="validateField" id="validation-input" placeholder="https://www.example.com/example" v-model="url.href" @input="updateModel" v-on:keyup.enter="validateUrl" :tabindex="withForm ? -1 : 0"/>
       <div class="validation-actions" v-if="withForm">
         <div class="validated action" @click="copyUrl" @keyup.enter="copyUrl" v-if="validated && formValid" tabindex="0">
           <img src="../assets/check.png" class="action-img" alt="checkmark">
@@ -69,10 +69,18 @@ export default {
           // show validation success message
           this.validated = true;
           this.showForm();
+          this.$nextTick(() => {
+            this.transferFocus();
+          });
         }
       } else {
         this.showFlags = true;
       }
+    },
+    transferFocus() {
+      const actionButton = document.querySelector('.validation-actions div');
+      console.log(actionButton);
+      actionButton.focus();
     },
     copyUrl() {
       const target = document.getElementById('validation-input');
@@ -80,11 +88,9 @@ export default {
       target.setSelectionRange(0, target.value.length);
       // copy the selection
       document.execCommand('copy');
-      // restore focus
       const actionTextContainer = document.querySelector('.validated.action .action-txt');
       actionTextContainer.firstChild.nodeValue = 'Copied!';
-      const elem = actionTextContainer.parentElement;
-      elem.focus();
+      this.transferFocus();
     },
     showForm() {
       this.showFlags = false;
