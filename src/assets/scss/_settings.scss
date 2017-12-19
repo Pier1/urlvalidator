@@ -1,2 +1,5 @@
+@import '../../../node_modules/normalize-scss/sass/normalize';
+@include normalize;
+
 $max-container-width: 990px;
 $min-nav-height: 40px;
