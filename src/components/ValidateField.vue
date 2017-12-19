@@ -117,18 +117,19 @@ export default {
   user-select: none;
 }
 
-.withform input {
-  border-color: transparent;
-  background-color: #cbc8c8;
-}
-
 #validation-input {
-  width: 85%;
+  width: 100%;
   text-align: center;
   font: inherit;
   min-height: 3rem;
   margin: 0;
   padding: 0 0.5rem;
+}
+
+.withform #validation-input {
+  width: 85%;
+  border-color: transparent;
+  background-color: #cbc8c8;
 }
 
 .validation-actions {
