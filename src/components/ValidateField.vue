@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       validFlagText: configuration.validationText,
+      apiURL: process.env.API_URL,
       showFlags: false,
       errorStatusCode: '',
       validated: false,
@@ -87,7 +88,7 @@ export default {
     validateUrl() {
       const requestOptions = {
         // TODO: Don't hard code localhost:3000
-        uri: `http://localhost:3000/check-url`,
+        uri: `${this.apiURL}/check-url`,
         qs: {
           url: this.url.href
         },
