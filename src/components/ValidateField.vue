@@ -22,7 +22,7 @@
       <ul v-if="showFlags">
         <li v-for="(text, key) in validFlagText" v-if="text && !validFlags[key]" v-html="text"></li>
       </ul>
-      <ul v-if="errorStatusCode">
+      <ul class="--warning" v-if="errorStatusCode">
         <li v-html="errorStatusCode"></li>
       </ul>
     </div>
@@ -105,7 +105,7 @@ export default {
             }
           })
           .catch(function errorReturned(error) {
-            this.errorStatusCode = `${error.error.status} - ${error.error.statusText}`;
+            this.errorStatusCode = `${error.error.status} - ${error.error.statusCode}`;
           });
       }
     },
@@ -243,6 +243,12 @@ export default {
 .flag-container ul {
   list-style: none;
   margin: 0;
+  &.--warning {
+    li {
+      border-color: #ffc300;
+      color: #cc9c00;
+    }
+  }
 }
 
 .flag-container ul li {
