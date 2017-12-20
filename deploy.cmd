@@ -102,7 +102,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd !NPM_CMD! install
   call :ExecuteCmd !NPM_CMD! run build
-  call :ExecuteCmd pm2 start ./src/server.js --name "API" --watch
+  call :ExecuteCmd pm2 start ecosystem.config.js
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
