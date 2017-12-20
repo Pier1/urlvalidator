@@ -102,6 +102,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd !NPM_CMD! install
   call :ExecuteCmd !NPM_CMD! run build
+  call :ExecuteCmd !NPM_CMD! run pm2
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )

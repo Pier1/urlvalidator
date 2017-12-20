@@ -3,16 +3,15 @@
   "version": "1.0.0",
   "description": "URL Validation Service",
   "author": "Davis, Steven T <STDAVIS@pier1.com>",
-  "contributors": [
-    "Chancellor Clark <cclark@pier1.com>"
-  ],
+  "contributors": ["Chancellor Clark <cclark@pier1.com>"],
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "server": "node src/server.js",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "pm2": "node ./node_modules/.bin/pm2 start ecosystem.config.js"
   },
   "dependencies": {
     "check-url": "^1.0.0",
@@ -77,9 +76,5 @@
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }
