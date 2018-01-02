@@ -14,7 +14,7 @@ module.exports = {
       },
       env_production: {
         NODE_ENV: 'production',
-        API_URL: "'http://url-validator.azurewebsites.net:3000'"
+        API_URL: "'http://urlvalidator.pier1ux.com'"
       }
     }
   ]
