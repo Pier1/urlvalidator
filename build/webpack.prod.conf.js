@@ -31,7 +31,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env,
-      'process.env.API_URL': "'http://url-validator.azurewebsites.net:3000'"
+      'process.env.API_URL': "'urlvalidator.pier1ux.com:3000'"
     }),
     new UglifyJsPlugin({
       uglifyOptions: {
